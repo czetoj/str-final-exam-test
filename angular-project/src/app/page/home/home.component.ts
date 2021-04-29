@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Customer } from 'src/app/model/customer';
 import { CustomerService } from 'src/app/service/customer.service';
@@ -14,9 +15,15 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-  ) {}
+    private ar: ActivatedRoute,
+  ) { }
 
-  onDelete(id: number): void {}
+  onDelete(id: number): void {
+    this.customerService.delete(id).subscribe(
+      () => {
+        this.list$ = this.customerService.getAll();
+      })
+  }
 
   ngOnInit(): void {
   }
